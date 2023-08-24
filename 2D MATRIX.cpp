@@ -1,71 +1,53 @@
-#include<stdio.h>
-int main()
-{
-    int cost[10][10],i,j,n,source,target,visited[10]={0},min=999,dist[10],pre[10];
-    int start,m,d,path[10];
-    printf("Enter number of nodes\n ");
-    scanf("%d",&n);
-    printf("Enter weight of all the paths in adjacency matrix form\n");
-    
-   
-    for(i=1;i<=n;i++)
-    {
-        for(j=1;j<=n;j++)
-        {
-            scanf("%d",&cost[i][j]);
-            if(cost[i][j]==0)
-              cost[i][j]=999;
-        }
-    }
-    printf("Enter the source\n");
-    scanf("%d",&source);
-    printf("Enter the target\n");
-    scanf("%d",&target);
+
     
     
-    start=source;
-    for(i=1;i<=n;i++)
-    {
-        dist[i]=999;  
-        pre[i]=-1;   
-    }
-    visited[source]=1; 
-    dist[source]=0; 
-    while(visited[target]==0)
-    {
-        min=999;
-        m=0;
-        for(i=1;i<=n;i++)
-        {
-            d=dist[start]+cost[start][i];   
-            if(d<dist[i] && visited[i]==0)
-            {
-                dist[i]=d;
-                pre[i]=start;
-            }
-            if(min>dist[i] && visited[i]==0)
-            {
-                min=dist[i];
-                m=i;
+   #include <stdio.h>
+
+int search(int **M , int x , int y){
+    
+    int i , j;
+    
+    int max;
+    
+    for(i=0; i<x; i++){
+        for(j=0; j<y; j++){
+            if(M[i][j] > max){
+                max = M[i][j];
             }
         }
-        start=m;
-        visited[m]=1;
     }
-    start=target;
-    j=0;
-    while(start!=-1)
-    {
-        path[j++]=start;
-        start=pre[start];
+    
+    return max;
+}
+
+int main(){
+    
+    int n , m;
+    
+    do{
+        scanf("%d" , &n);
+        
+    }while(n<2 || n>5);
+    
+    do{
+        scanf("%d" , &m);
+        
+    }while(m<2 || m>8);
+    
+    int A[n][m];
+
+    int i , j;
+
+    for(i=0; i<n; i++){
+        for(j=0; j<m; j++){
+            scanf("%d" , &A[i][j]);
+        }
     }
-    for(i=j-1;i>=0;i--)
-    {
-        if(i!=j-1)
-          printf(" to ");
-         printf("%d",path[i]);
-    }
-     
-    printf("\n shortest path is %d",dist[target]);
+
+    int r = search(**A , n , m);
+    
+    printf("RESULTS:\n");
+    printf("%d" , r);
+    
     return 0;
 }
